@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout::head">
+<meta charset="UTF-8">
+</head>
+<body>
+	<nav th:replace="layout::menu"></nav>
+	<div class="card">
+		<div class="card-header badge-danger">REGISTRAR CURSO</div>
+		<div class="card-body">
+			<form th:action="@{/Curso/frmRegistrarCurso}" method="post"
+				th:object="${cursoform}">
+				<div class="form-group">
+					<label for="txtnombre">Ingrese nombre del curso:</label> <input
+						type="text" class="form-control" id="txtnombre"
+						th:field="*{nomcurso}">
+				</div>
+				<div class="form-group">
+					<label for="txtapellido">Ingrese crédito del curso:</label> <input
+						type="number" class="form-control" id="txtapellido"
+						th:field="*{credito}">
+				</div>
+				<div class="text-center">
+					<button type="submit" class="btn btn-primary">Registrar</button>
+				</div>
+				<div th:if="${visualizar}" class="alert" th:classappend="${colormensaje}" role="alert">
+					<span th:text="${respuesta} ?: ''"></span>
+				</div>				
+			</form>
+		</div>
+	</div>
+</body>
+</html>
