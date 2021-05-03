@@ -1,13 +1,19 @@
 package edu.pe.idat.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
 import edu.pe.idat.model.Curso;
+import edu.pe.idat.model.response.ResultadoResponse;
 import edu.pe.idat.service.CursoService;
 
 @Controller
@@ -24,31 +30,39 @@ public class CursoController {
 		return "Curso/frmListarCurso";
 	}
 	
-	@GetMapping("/frmRegistrarCurso")
-	public String frmRegistrarCurso(Model model) {
-		model.addAttribute("cursoform", new Curso());
-		model.addAttribute("visualizar", false);
-		model.addAttribute("titulo", "Registro de curso");
-		return "Curso/frmRegistrarCurso";
+	
+	@PostMapping("/registrarCurso")
+	@ResponseBody
+	public ResultadoResponse registrarCurso(@RequestBody Curso objCurso) {
+		String mensaje = "Curso registrado correctamente.";
+		Boolean respuesta = true;
+		try {
+			cursoService.registrarCurso(objCurso);
+		}catch(Exception ex) {
+			mensaje = "Curso no registrado.";
+			respuesta = false;
+		}
+		return new ResultadoResponse(respuesta, mensaje);
 	}
 	
-	@PostMapping("/frmRegistrarCurso")
-	public String frmRegistrarCurso(
-			@ModelAttribute("cursoform") Curso cursoForm,
-			Model model) {
-		String respuesta = "Curso registrado correctamente.";
-		String colormensaje = "alert-success";
+	@GetMapping("/listarCursos")
+	@ResponseBody
+	public List<Curso> listarCursos(){
+		return cursoService.listarCursos();
+	}
+	
+	@DeleteMapping("/eliminarCurso")
+	@ResponseBody
+	public ResultadoResponse eliminarCurso(@RequestBody Curso objCurso) {
+		String mensaje = "Curso eliminado correctamente.";
+		Boolean respuesta = true;
 		try {
-			cursoService.registrarCurso(cursoForm);
+			cursoService.eliminarCurso(objCurso);
 		}catch(Exception ex) {
-			respuesta = "Curso no registrado.";
-			colormensaje = "alert-danger";
+			mensaje = "El curso no fue eliminado.";
+			respuesta = false;
 		}
-    	model.addAttribute("visualizar", true);
-    	model.addAttribute("respuesta", respuesta);
-    	model.addAttribute("colormensaje", colormensaje);
-    	model.addAttribute("titulo", "Registro de curso");
-		return "Curso/frmRegistrarCurso";
-	}	
+		return new ResultadoResponse(respuesta, mensaje);
+	}
 	
 }
