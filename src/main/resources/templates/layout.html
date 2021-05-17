@@ -10,7 +10,8 @@
 	th:src="@{/script/bootstrap/bootstrap.bundle.js}"></script>
 </head>
 <body>
-	<nav th:fragment="menu" class="navbar navbar-expand-lg navbar-dark bg-dark">
+	<nav th:fragment="menu"
+		class="navbar navbar-expand-lg navbar-dark bg-dark">
 		<a class="navbar-brand" href="#">Navbar</a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse"
 			data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown"
@@ -27,7 +28,14 @@
 					id="navbarDropdownMenuLink" role="button" data-toggle="dropdown"
 					aria-haspopup="true" aria-expanded="false">Curso</a>
 					<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-						<a class="dropdown-item" th:href="@{/Curso/frmListarCurso}">Mantenimiento</a> 
+						<a class="dropdown-item" th:href="@{/Curso/frmListarCurso}">Mantenimiento</a>
+					</div></li>
+				<li class="nav-item dropdown"><a
+					class="nav-link dropdown-toggle" href="#"
+					id="navbarDropdownMenuLink" role="button" data-toggle="dropdown"
+					aria-haspopup="true" aria-expanded="false">Alumno</a>
+					<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+						<a class="dropdown-item" th:href="@{/Alumno/frmAlumnosxEspecialidad}">Notas x Alumno</a>
 					</div></li>
 			</ul>
 		</div>
